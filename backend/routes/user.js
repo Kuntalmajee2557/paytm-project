@@ -1,5 +1,5 @@
 import express from "express";
-import { signinBody, signupBody } from "../type.js";
+import { signinBody, signupBody, upadateUserBody } from "../type.js";
 import User from "../models/user.js";
 import { generateToken } from "../jwt.js";
 import authMiddleware from "../midddleware.js";
@@ -70,6 +70,55 @@ router.post("/user/signin", async (req, res) => {
 router.get('/user/profile', authMiddleware, (req, res) => {
   console.log(req.userId)
   res.send(`${req.userId}`)
+})
+
+router.put('/', authMiddleware, async (req, res) => {
+  const {success} = upadateUserBody.safeParse(req.body)
+  if (!success) {
+    return res.status(411).json({
+      message: "wrong inputs",
+    });
+  }
+
+  const userId = req.userId;
+
+  const user = await User.findOne({
+    _id: userId
+  })
+
+  if(!user){
+    return res.status(411).json({
+      massage: "user not found"
+    })
+  }
+
+
+  const response = await User.updateOne({_id: userId},{
+    password: req.body.password,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName
+  })
+
+  return res.status(200).json("update done")
+
+
+})
+
+
+router.get('/user/bulk' , async (req,res) => {
+  const filter = req.query.filter || "";
+
+
+  const users = await User.find({$or:[
+    {username: {$regex: filter}},
+    {firstName: {$regex: filter}},
+    {lastName: {$regex: filter}}
+  ]})
+
+  res.status(200).json({
+    users: users
+  })
+
 })
 
 export default router;
