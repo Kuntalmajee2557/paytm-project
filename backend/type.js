@@ -12,5 +12,9 @@ const signinBody = zod.object({
     password: zod.string(),
 })
 
-
-export {signinBody, signupBody};
+const upadateUserBody = zod.object({
+    password: zod.string(),
+    firstName: zod.string(),
+    lastName: zod.string()
+})
+export {signinBody, signupBody, upadateUserBody};
