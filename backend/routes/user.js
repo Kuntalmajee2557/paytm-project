@@ -2,6 +2,7 @@ import express from "express";
 import { signinBody, signupBody } from "../type.js";
 import User from "../models/user.js";
 import { generateToken } from "../jwt.js";
+import authMiddleware from "../midddleware.js";
 const router = express.Router();
 
 router.post("/user/signup", async (req, res) => {
@@ -65,5 +66,10 @@ router.post("/user/signin", async (req, res) => {
     token: token,
   });
 });
+
+router.get('/user/profile', authMiddleware, (req, res) => {
+  console.log(req.userId)
+  res.send(`${req.userId}`)
+})
 
 export default router;
