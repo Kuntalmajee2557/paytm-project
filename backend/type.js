@@ -17,4 +17,9 @@ const upadateUserBody = zod.object({
     firstName: zod.string(),
     lastName: zod.string()
 })
-export {signinBody, signupBody, upadateUserBody};
+
+const transferBody = zod.object({
+    userId: zod.string(),
+    amount: zod.number().positive()
+})
+export {signinBody, signupBody, upadateUserBody, transferBody};

@@ -3,9 +3,10 @@ import { signinBody, signupBody, upadateUserBody } from "../type.js";
 import User from "../models/user.js";
 import { generateToken } from "../jwt.js";
 import authMiddleware from "../midddleware.js";
+import Account from "../models/account.js";
 const router = express.Router();
 
-router.post("/user/signup", async (req, res) => {
+router.post("/signup", async (req, res) => {
   const { success } = signupBody.safeParse(req.body);
   if (!success) {
     return res.status(411).json({
@@ -34,13 +35,20 @@ router.post("/user/signup", async (req, res) => {
 
   const token = generateToken({ userId });
 
+  
+  const account = await Account.create({
+    userId: userId,
+    balance: Math.floor((Math.random() * 10000) + 1)
+  })
+  
   return res.status(200).json({
     message: "User created successfully",
+    balance: account.balance,
     token: token,
   });
 });
 
-router.post("/user/signin", async (req, res) => {
+router.post("/signin", async (req, res) => {
   const { success } = signinBody.safeParse(req.body);
   if (!success) {
     return res.status(411).json({
@@ -67,7 +75,7 @@ router.post("/user/signin", async (req, res) => {
   });
 });
 
-router.get('/user/profile', authMiddleware, (req, res) => {
+router.get('/profile', authMiddleware, (req, res) => {
   console.log(req.userId)
   res.send(`${req.userId}`)
 })
@@ -105,7 +113,7 @@ router.put('/', authMiddleware, async (req, res) => {
 })
 
 
-router.get('/user/bulk' , async (req,res) => {
+router.get('/bulk' , async (req,res) => {
   const filter = req.query.filter || "";
 
 
