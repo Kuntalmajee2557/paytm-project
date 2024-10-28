@@ -9,7 +9,7 @@ function Users() {
     }
     return (
         <div className='flex flex-col mx-5'>
-            <h2>Users</h2>
+            <h2 className='font-bold text-2xl'>Users</h2>
             <input type="text" placeholder='Search Users..' className='my-3 border rounded-sm border-slate-400 w-full px-2 py-1'/>
             <div className='flex flex-col gap-3'>
 

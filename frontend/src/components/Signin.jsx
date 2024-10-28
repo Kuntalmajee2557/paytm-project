@@ -28,7 +28,7 @@ function Signin() {
         <InputBox label="Username" content='JhonDoe User' value={username} setValue={setUsername}></InputBox>
         <InputBox label="Password" content='12345' value={password} setValue={setPassword}></InputBox>
 
-        <Button content="Singin" onclickHandler={signinClickHandler}></Button>
+        <Button content="Sing in" onclickHandler={signinClickHandler}></Button>
         <BottomWarning text="Don't have an account?" buttontext='Sign  up' onclickHandler={signupClickHandler}></BottomWarning>
 
 

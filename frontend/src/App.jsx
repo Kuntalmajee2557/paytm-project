@@ -6,8 +6,8 @@ import './App.css'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
 import Dashboard from './components/Dashboard'
-import Send from './components/Send'
 import Home from './components/Home'
+import SendMoney from './components/SendMoney'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -19,7 +19,7 @@ function App() {
         <Route path='/signup' element={<Signup/>}></Route>
         <Route path='/signin' element={ <Signin/>}></Route>
         <Route path='/dashboard' element={ <Dashboard/>}></Route>
-        <Route path='/send' element={ <Send/>}></Route>
+        <Route path='/send' element={ <SendMoney/>}></Route>
       </Routes>
 
 
