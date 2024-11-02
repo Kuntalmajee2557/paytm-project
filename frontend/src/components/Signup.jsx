@@ -5,6 +5,7 @@ import InputBox from './InputBox'
 import Button from './Button'
 import BottomWarning from './BottomWarning'
 import SubHeading from './SubHeading'
+import axios from 'axios'
 
 function Signup() {
   const [username, setUsername] = useState("")
@@ -13,8 +14,18 @@ function Signup() {
   const [password, setPassword] = useState("")
 
   const navigate = useNavigate()
-  function signupClickHandler() {
-    navigate("/dashboard")
+  async function signupClickHandler() {
+    const response = await axios.post('http://localhost:3000/app/v1/user/signup', {
+      username: username,
+      firstName: firstname,
+      lastName: lastname,
+      password: password
+    })
+
+    alert(response.data.message)
+    console.log(response.data.token)
+    navigate("/dashboard", {state:{token: response.data.token}})
+
   }
   function signinClickHandler() {
     navigate("/signin")
