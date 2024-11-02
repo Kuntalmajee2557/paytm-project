@@ -23,7 +23,7 @@ function Signup() {
     })
 
     alert(response.data.message)
-    console.log(response.data.token)
+    // console.log(response.data.token)
     navigate("/dashboard", {state:{token: response.data.token}})
 
   }

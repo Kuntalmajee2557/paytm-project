@@ -5,8 +5,9 @@ import { transferBody } from "../type.js";
 const router = express.Router();
 
 router.get("/balance", authMiddleware, async (req, res) => {
-  console.log(req.userId)
-  const account = await Account.findOne({ userid: req.userid });
+  console.log("here is " + req.userId)
+  const account = await Account.findOne({ userId: req.userId });
+  console.log(account)
   res.status(200).json({ balance: account.balance });
 });
 
