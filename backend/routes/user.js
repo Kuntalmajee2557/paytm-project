@@ -75,9 +75,22 @@ router.post("/signin", async (req, res) => {
   });
 });
 
-router.get('/profile', authMiddleware, (req, res) => {
-  console.log(req.userId)
-  res.send(`${req.userId}`)
+router.get('/profile', authMiddleware, async (req, res) => {
+  // console.log(req.userId)
+  const userId = req.userId;
+
+  const user = await User.findOne({
+    _id: userId
+  })
+
+  if(!user){
+    return res.status(411).json({
+      massage: "user not found"
+    })
+  }
+
+  res.status(200).json({user})
+
 })
 
 router.put('/', authMiddleware, async (req, res) => {
